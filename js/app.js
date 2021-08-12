@@ -6,6 +6,7 @@ const preencherFormulario = (endereco) => {
     document.getElementById('bairro').value = endereco.bairro;
     document.getElementById('cidade').value = endereco.localidade;
     document.getElementById('estado').value = endereco.uf;
+    document.getElementById('numero').value = 'Digite o número';
 }
 
  const pesquisarCep = async() =>{
@@ -14,7 +15,13 @@ const preencherFormulario = (endereco) => {
 
     const dados = await fetch(url);
     const endereco = await dados.json();
-    preencherFormulario(endereco);
+
+    if(endereco.hasOwnProperty('erro')){
+        alert('Endereço não encontrado! Cadastre esse cep em https://viacep.com.br/cep/');
+    }else{
+        preencherFormulario(endereco);
+    }
+    
 
     //ele faz tudo é assincrono e tras uma pomisse ai eu pego apenas a responsse e trato ela pelo metodo json
    // fetch(url).then(response => response.json()).then(console.log);
